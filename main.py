@@ -41,7 +41,24 @@ def bfs(graph, vertice_root, visited):
                     queue.append(vertice_inside)
 
 
+def transD(graph, vertice):
+    visitados = []
+    aVisitados = [vertice]
 
+    def search(graph):
+            while aVisitados:
+                v = aVisitados[0]
+                aVisitados.remove(0)
+                visitados.append(v)
+                for y in range(length):
+                    if(matriz[mapaNum[v]][y]):
+                        if(mapaName[y] not in visitados):
+                            aVisitados.append(mapaName[y])
+                search(graph)
+
+
+    search(graph)
+    print(aVisitados)
 
 directed = input("O grafo é direcional? (S-> Sim / N -> Não): ") # Definindo se o grafo é direcional
 if directed is "S":
@@ -61,9 +78,11 @@ length = len(vertices)
 #Criando matriz
 matriz = np.zeros((length,length))
 
-mapan = {}
+mapaNum = {}
+mapaName = {}
 for x in range(length):
-    mapan[vertices[x]] = x
+    mapaNum[vertices[x]] = x
+    mapaName[x] = vertices[x]
 
 edges = input("Informe as ligações.(Ex: a:b,c,d ; b:a,c,f):")
 s = edges.split(";")
@@ -83,10 +102,10 @@ print(edge)
 
 for x, y  in edge:
     if(direct):
-        matriz[mapan[x]][mapan[y]] = 1
+        matriz[mapaNum[x]][mapaNum[y]] = 1
     else:
-        matriz[mapan[x]][mapan[y]] = 1
-        matriz[mapan[y]][mapan[x]] = 1
+        matriz[mapaNum[x]][mapaNum[y]] = 1
+        matriz[mapaNum[y]][mapaNum[x]] = 1
 
 print(matriz)
 
