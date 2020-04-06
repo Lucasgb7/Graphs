@@ -47,16 +47,13 @@ def ftd(graph, vertice): # Fecho Transitivo Direto
     def search(graph):
             while missing_visit:
                 v = missing_visit[0]
-                print(v)
                 missing_visit.pop(0)
-
-                visited.append(v)
                 for y in range(length):
                     if(matriz[mapaNum[v]][y]):
                         if(mapaName[y] not in visited):
                             missing_visit.append(mapaName[y])
+                            visited.append(v)
                 search(graph)
-
 
     search(graph)
     print(visited)
