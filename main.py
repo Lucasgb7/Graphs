@@ -46,21 +46,43 @@ def ftd(graph, vertice): # Fecho Transitivo Direto
 
     def search(graph):
             while missing_visit:
-                v = missing_visit[0]
-                missing_visit.pop(0)
+                v = missing_visit.pop(0)
                 for y in range(nVertices):
                     if(matrix_adj[map_Vposition[v]][y]):
-                        if(map_name[y] not in visited):
+                        if(map_name[y] not in visited and map_name[y] not in missing_visit):
                             missing_visit.append(map_name[y])
-                            visited.append(v)
-                search(graph)
+                visited.append(v)
+
 
     search(graph)
-    print(visited)
+    return visited
 
 
-def fti():
-    pass
+def fti(graph, vertice): # Fecho Transitivo Direto
+    visited = []
+    missing_visit = [vertice]
+
+    def search(graph):
+            while missing_visit:
+                v = missing_visit.pop(0)
+                for x in range(nVertices):
+                    if(matrix_adj[x][map_Vposition[v]]):
+                        if(map_name[x] not in visited and map_name[x] not in missing_visit):
+
+                            print("Linha: ",map_name[x] ,"Coluna: ", v)
+                            missing_visit.append(map_name[x])
+                visited.append(v)
+
+
+    search(graph)
+    return visited
+
+#a,b,c,d,e,f,g,h,i
+#a:e,d;d:a,f;f:d,g;g:f,e,i;e:a,g,b;i:g,c,h;b:e,c;c:b,i,h;h:c,i
+
+
+#a,b,c,d,e,f,g
+#a:b,d;b:c;c:g;d:e,f;e:a,b,g,c;f:c;g:b,f
 
 #INICIO DO PROGRAMA
 directed = input("O grafo é direcional? (S-> Sim / N -> Não): ") # Definindo se o grafo é direcional
@@ -112,7 +134,9 @@ print(matrix_adj)
 graph = Graphs(edge, direct) # Criando o grafo
 print(graph.adj) # Lista de adjacências
 
-ftd(graph, "a")
+print("FTD: ",ftd(graph, "a"))
+print("FTI: ",fti(graph, "a"))
+print("Grafo: ", vertices)
 
 search = input("Deseja realizar uma busca? (S-> Sim / N -> Não): ")
 if search is "S" or search is "s":
