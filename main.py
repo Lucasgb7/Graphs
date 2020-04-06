@@ -47,7 +47,9 @@ def ftd(graph, vertice): # Fecho Transitivo Direto
     def search(graph):
             while missing_visit:
                 v = missing_visit[0]
-                missing_visit.remove(0)
+                print(v)
+                missing_visit.pop(0)
+
                 visited.append(v)
                 for y in range(length):
                     if(matriz[mapaNum[v]][y]):
@@ -57,8 +59,16 @@ def ftd(graph, vertice): # Fecho Transitivo Direto
 
 
     search(graph)
-    print(missing_visit)
+    print(visited)
 
+
+def fti():
+    pass
+
+
+
+
+#INICIO DO PROGRAMA
 directed = input("O grafo é direcional? (S-> Sim / N -> Não): ") # Definindo se o grafo é direcional
 if directed is "S":
     direct = True
@@ -109,6 +119,8 @@ print(matriz)
 
 graph = Graphs(edge, direct) # Criando o grafo
 print(graph.adj) # Lista de adjacências
+
+ftd(graph, "a")
 
 search = input("Deseja realizar uma busca? (S-> Sim / N -> Não): ")
 if search is "S" or search is "s":
