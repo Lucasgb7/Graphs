@@ -48,10 +48,10 @@ def ftd(graph, vertice): # Fecho Transitivo Direto
             while missing_visit:
                 v = missing_visit[0]
                 missing_visit.pop(0)
-                for y in range(length):
-                    if(matriz[mapaNum[v]][y]):
-                        if(mapaName[y] not in visited):
-                            missing_visit.append(mapaName[y])
+                for y in range(nVertices):
+                    if(matrix_adj[map_Vposition[v]][y]):
+                        if(map_name[y] not in visited):
+                            missing_visit.append(map_name[y])
                             visited.append(v)
                 search(graph)
 
@@ -62,9 +62,6 @@ def ftd(graph, vertice): # Fecho Transitivo Direto
 def fti():
     pass
 
-
-
-
 #INICIO DO PROGRAMA
 directed = input("O grafo é direcional? (S-> Sim / N -> Não): ") # Definindo se o grafo é direcional
 if directed is "S":
@@ -74,20 +71,18 @@ else:
     direct = False
     G = nx.Graph() # Função gráfica para utilizar arestas (não direcional)
 
-
-
 vertices = input("Informe os vértices (Ex: a,b,c,d): ") # Lendo os vértices do usuário
 vertices = vertices.split(",") # Adicionando os vértices numa lista
-length = len(vertices)
+nVertices = len(vertices) # Número de vértices
 
 # Criando matriz de adjacência
-matriz = np.zeros((length,length))
+matrix_adj = np.zeros((nVertices, nVertices))
 
-mapaNum = {} # Mapa para identificar as posições dos vértices na matriz de adjacência
-mapaName = {}
-for x in range(length): # Laço para definir posição dos vértices na matriz de adjacência
-    mapaNum[vertices[x]] = x
-    mapaName[x] = vertices[x]
+map_Vposition = {} # Mapa para identificar as posições dos vértices na matriz de adjacência
+map_name = {} # Mapa para nomear as posições com os respectivos vértices
+for x in range(nVertices): # Laço para definir posição dos vértices na matriz de adjacência
+    map_Vposition[vertices[x]] = x
+    map_name[x] = vertices[x]
 
 edges = input("Informe as ligações.(Ex: a:b,c,d ; b:a,c,f):") # Lendo as ligações (arestas)
 s = edges.split(";") # Dividindo os vértices de suas ligações
@@ -107,12 +102,12 @@ print(edge)
 
 for x, y  in edge: # Preenchendo a matriz de adjacência com suas respectivas ligações
     if(direct):
-        matriz[mapaNum[x]][mapaNum[y]] = 1
+        matrix_adj[map_Vposition[x]][map_Vposition[y]] = 1
     else:
-        matriz[mapaNum[x]][mapaNum[y]] = 1
-        matriz[mapaNum[y]][mapaNum[x]] = 1
+        matrix_adj[map_Vposition[x]][map_Vposition[y]] = 1
+        matrix_adj[map_Vposition[y]][map_Vposition[x]] = 1
 
-print(matriz)
+print(matrix_adj)
 
 graph = Graphs(edge, direct) # Criando o grafo
 print(graph.adj) # Lista de adjacências
