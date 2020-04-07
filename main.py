@@ -22,7 +22,7 @@ def dfs(graph, vertice, visited): # Depth First Search (DFS) - Busca por Profund
         while missing_visit: # Enquanto todos não foram visitados
             vertice = missing_visit.pop()
             for neighbour in graph[vertice]: # Para cada vizinho do vértice em questão
-                if neighbour not in visited:
+                if neighbour not in visited: # Se ainda não foi visitado
                     visited.append(neighbour)
                     missing_visit.append(neighbour)
 
@@ -36,20 +36,20 @@ def bfs(graph, vertice_root, visited): # Breadth First Search (BFS) - Busca por 
         if vertice not in visited: # Verifica se o vértice foi visitado
             visited.append(vertice)
             for vertice_inside in graph[vertice]:   # Adiciona cada vértice a ser caminhado que não foi visitado
-                if vertice_inside not in visited:
+                if vertice_inside not in visited:   # Se ainda não foi visitado
                     queue.append(vertice_inside)
 
 
-def ftd(graph, vertice): # Fecho Transitivo Direto
+def ftd(graph, vertice): # Fecho Transitivo Direto (Verifica por linha)
     visited = []
     missing_visit = [vertice]
 
     def search(graph):
-            while missing_visit:
-                v = missing_visit.pop(0)
+            while missing_visit:    # Enquanto todos não foram visitados
+                v = missing_visit.pop(0)    # Remove o primeiro da lista
                 for y in range(nVertices):
-                    if(matrix_adj[map_Vposition[v]][y]):
-                        if(map_name[y] not in visited and map_name[y] not in missing_visit):
+                    if(matrix_adj[map_Vposition[v]][y]):    # Verifica na linha, passando por cada coluna para verificar vértices ligados
+                        if(map_name[y] not in visited and map_name[y] not in missing_visit): # Se estiver ligado mas não foi vistado
                             missing_visit.append(map_name[y])
                 visited.append(v)
 
@@ -58,24 +58,28 @@ def ftd(graph, vertice): # Fecho Transitivo Direto
     return visited
 
 
-def fti(graph, vertice): # Fecho Transitivo Direto
+def fti(graph, vertice): # Fecho Transitivo Indireto (Verificar por coluna)
     visited = []
     missing_visit = [vertice]
 
     def search(graph):
             while missing_visit:
-                v = missing_visit.pop(0)
-                for x in range(nVertices):
-                    if(matrix_adj[x][map_Vposition[v]]):
-                        if(map_name[x] not in visited and map_name[x] not in missing_visit):
+                v = missing_visit.pop(0)    # Remove o primeiro da lista
+                for x in range(nVertices):  # Em cada coluna
+                    if(matrix_adj[x][map_Vposition[v]]): # Verifica na coluna, descendo a linha se o vértice esta ligado
+                        if(map_name[x] not in visited and map_name[x] not in missing_visit):    # Se estiver ligado e ainda não foi visitado
 
                             print("Linha: ",map_name[x] ,"Coluna: ", v)
-                            missing_visit.append(map_name[x])
+                            missing_visit.append(map_name[x])   # Coloca seu caminho para os que faltam visitar
                 visited.append(v)
 
 
     search(graph)
     return visited
+
+def intersection(lst1, lst2):
+    lst3 = [value for value in lst1 if value in lst2]
+    return lst3
 
 #a,b,c,d,e,f,g,h,i
 #a:e,d;d:a,f;f:d,g;g:f,e,i;e:a,g,b;i:g,c,h;b:e,c;c:b,i,h;h:c,i
@@ -134,13 +138,22 @@ print(matrix_adj)
 graph = Graphs(edge, direct) # Criando o grafo
 print(graph.adj) # Lista de adjacências
 
-print("FTD: ",ftd(graph, "a"))
-print("FTI: ",fti(graph, "a"))
+# Define o vértice raiz para inicialização de busca (dfs, bfs, ftd, fti)
+vertice_root = input("Defina um vértice raíz para verificar conectividade ou para realixar busca: ")
+ftd_graph = {vertice_root: ftd(graph, vertice_root)} # Armazena os FTD's dos vértices
+fti_graph = {vertice_root: fti(graph, vertice_root)} # Armazena os FTI's dos vértices
+print("FTD: ",ftd(graph, vertice_root))
+print("FTI: ",fti(graph, vertice_root))
 print("Grafo: ", vertices)
+
+intersec_root = intersection(ftd_graph[vertice_root], fti_graph[vertice_root])
+if(all(elem in intersec_root  for elem in vertices)): # Verifica se a interescção possui todos os vértices do grafo
+    print("O grafo é conexo")
+else:
+    print("O grafo é conexo")
 
 search = input("Deseja realizar uma busca? (S-> Sim / N -> Não): ")
 if search is "S" or search is "s":
-    vertice_root = input("Defina qual o vértice raíz para realização da busca: ")
     search_type = input("Deseja realizar busca de em Largura(L) ou Profundidade(P)?: ")
     visited = []
     if search_type == "L": # Busca do tipo largura
