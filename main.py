@@ -146,11 +146,11 @@ print("Grafo completo: ", vertices)
 
 if(all(elem in intersec_root  for elem in vertices)): # Verifica se a interseção possui todos os vértices do grafo
     if direct:
-        print("\nO grafo é fortemente conexo!\n")
+        print("\033[93m"+"\nO grafo é fortemente conexo!\n"+"\033[0m")
     else:
-        print("\nO grafo É conexo!\n")
+        print("\033[93m"+"\nO grafo É conexo!\n"+"\033[0m")
 else:
-    print("\nO grafo NÃO é conexo!\n")
+    print("\033[93m"+"\nO grafo NÃO é conexo!\n"+"\033[0m")
 
 #a,b,c,d,e,f,g
 #a:b,d;b:c;c:g;d:e,f;e:a,b,g,c;f:c;g:b,f
