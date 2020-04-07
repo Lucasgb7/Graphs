@@ -68,8 +68,7 @@ def fti(graph, vertice): # Fecho Transitivo Indireto (Verificar por coluna)
                 for x in range(nVertices):  # Em cada coluna
                     if(matrix_adj[x][map_Vposition[v]]): # Verifica na coluna, descendo a linha se o vértice esta ligado
                         if(map_name[x] not in visited and map_name[x] not in missing_visit):    # Se estiver ligado e ainda não foi visitado
-
-                            print("Linha: ",map_name[x] ,"Coluna: ", v)
+                            #print("Linha: ",map_name[x] ,"Coluna: ", v)
                             missing_visit.append(map_name[x])   # Coloca seu caminho para os que faltam visitar
                 visited.append(v)
 
@@ -77,7 +76,7 @@ def fti(graph, vertice): # Fecho Transitivo Indireto (Verificar por coluna)
     search(graph)
     return visited
 
-def intersection(lst1, lst2):
+def intersection(lst1, lst2): # Função para extrair a interseção de duas listas
     lst3 = [value for value in lst1 if value in lst2]
     return lst3
 
@@ -87,6 +86,9 @@ def intersection(lst1, lst2):
 
 #a,b,c,d,e,f,g
 #a:b,d;b:c;c:g;d:e,f;e:a,b,g,c;f:c;g:b,f
+
+#a,b,c,d,e
+#a:b,e;b:d;c:a;d:c,e;e:b
 
 #INICIO DO PROGRAMA
 directed = input("O grafo é direcional? (S-> Sim / N -> Não): ") # Definindo se o grafo é direcional
@@ -138,20 +140,29 @@ print(matrix_adj)
 graph = Graphs(edge, direct) # Criando o grafo
 print(graph.adj) # Lista de adjacências
 
+############### CONECTIVIDADE ###############
 # Define o vértice raiz para inicialização de busca (dfs, bfs, ftd, fti)
 vertice_root = input("Defina um vértice raíz para verificar conectividade ou para realixar busca: ")
 ftd_graph = {vertice_root: ftd(graph, vertice_root)} # Armazena os FTD's dos vértices
 fti_graph = {vertice_root: fti(graph, vertice_root)} # Armazena os FTI's dos vértices
-print("FTD: ",ftd(graph, vertice_root))
-print("FTI: ",fti(graph, vertice_root))
-print("Grafo: ", vertices)
 
+print("FTD da raíz: ",ftd(graph, vertice_root))
+print("FTI da raíz: ",fti(graph, vertice_root))
 intersec_root = intersection(ftd_graph[vertice_root], fti_graph[vertice_root])
-if(all(elem in intersec_root  for elem in vertices)): # Verifica se a interescção possui todos os vértices do grafo
-    print("O grafo é conexo")
-else:
-    print("O grafo é conexo")
+print("Interseção de FTD e FDI: ", intersec_root)
+print("Grafo completo", vertices)
 
+if(all(elem in intersec_root  for elem in vertices)): # Verifica se a interseção possui todos os vértices do grafo
+    print("O grafo É conexo!")
+else:
+    print("O grafo NÃO é conexo!")
+
+for v in vertices:  # Para cada vértice
+    ftd_graph[v] = ftd(graph, v)    # Fecho Transitivo Direto
+    fti_graph[v] = fti(graph, v)    # Fecho Transitivo Indireto
+    print("Subgrafo fortemente conexo do vértice ", v, ": ", intersection(ftd_graph[v], fti_graph[v])) # Interseção entre os dois fechos
+
+###############  BUSCA  ###############
 search = input("Deseja realizar uma busca? (S-> Sim / N -> Não): ")
 if search is "S" or search is "s":
     search_type = input("Deseja realizar busca de em Largura(L) ou Profundidade(P)?: ")
