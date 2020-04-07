@@ -39,7 +39,6 @@ def bfs(graph, vertice_root, visited): # Breadth First Search (BFS) - Busca por 
                 if vertice_inside not in visited:   # Se ainda não foi visitado
                     queue.append(vertice_inside)
 
-
 def ftd(graph, vertice): # Fecho Transitivo Direto (Verifica por linha)
     visited = []
     missing_visit = [vertice]
@@ -56,7 +55,6 @@ def ftd(graph, vertice): # Fecho Transitivo Direto (Verifica por linha)
 
     search(graph)
     return visited
-
 
 def fti(graph, vertice): # Fecho Transitivo Indireto (Verificar por coluna)
     visited = []
@@ -80,15 +78,15 @@ def intersection(lst1, lst2): # Função para extrair a interseção de duas lis
     lst3 = [value for value in lst1 if value in lst2]
     return lst3
 
-#a,b,c,d,e,f,g,h,i
-#a:e,d;d:a,f;f:d,g;g:f,e,i;e:a,g,b;i:g,c,h;b:e,c;c:b,i,h;h:c,i
+# Vértices e ligações para facilitar
+    #a,b,c,d,e,f,g,h,i
+    #a:e,d;d:a,f;f:d,g;g:f,e,i;e:a,g,b;i:g,c,h;b:e,c;c:b,i,h;h:c,i
 
+    #a,b,c,d,e,f,g
+    #a:b,d;b:c;c:g;d:e,f;e:a,b,g,c;f:c;g:b,f
 
-#a,b,c,d,e,f,g
-#a:b,d;b:c;c:g;d:e,f;e:a,b,g,c;f:c;g:b,f
-
-#a,b,c,d,e
-#a:b,e;b:d;c:a;d:c,e;e:b
+    #a,b,c,d,e
+    #a:b,e;b:d;c:a;d:c,e;e:b
 
 #INICIO DO PROGRAMA
 directed = input("O grafo é direcional? (S-> Sim / N -> Não): ") # Definindo se o grafo é direcional
@@ -105,7 +103,6 @@ nVertices = len(vertices) # Número de vértices
 
 # Criando matriz de adjacência
 matrix_adj = np.zeros((nVertices, nVertices))
-
 map_Vposition = {} # Mapa para identificar as posições dos vértices na matriz de adjacência
 map_name = {} # Mapa para nomear as posições com os respectivos vértices
 for x in range(nVertices): # Laço para definir posição dos vértices na matriz de adjacência
@@ -122,11 +119,7 @@ for x in s:
 edge =[] # Lista de ligações
 for x in mapa: # Reorganizando as ligações
     for y in mapa[x]:
-        print(x,y)
-        edge.append((x,y))
-
-print(edge)
-
+        edge.append((x,y))  # Adiciona as ligações ao mapa de adj.
 
 for x, y  in edge: # Preenchendo a matriz de adjacência com suas respectivas ligações
     if(direct):
@@ -135,10 +128,9 @@ for x, y  in edge: # Preenchendo a matriz de adjacência com suas respectivas li
         matrix_adj[map_Vposition[x]][map_Vposition[y]] = 1
         matrix_adj[map_Vposition[y]][map_Vposition[x]] = 1
 
+print("Matriz de Adjacências: ")
 print(matrix_adj)
-
 graph = Graphs(edge, direct) # Criando o grafo
-print(graph.adj) # Lista de adjacências
 
 ############### CONECTIVIDADE ###############
 # Define o vértice raiz para inicialização de busca (dfs, bfs, ftd, fti)
@@ -150,12 +142,15 @@ print("FTD da raíz: ",ftd(graph, vertice_root))
 print("FTI da raíz: ",fti(graph, vertice_root))
 intersec_root = intersection(ftd_graph[vertice_root], fti_graph[vertice_root])
 print("Interseção de FTD e FDI: ", intersec_root)
-print("Grafo completo", vertices)
+print("Grafo completo: ", vertices)
 
 if(all(elem in intersec_root  for elem in vertices)): # Verifica se a interseção possui todos os vértices do grafo
-    print("O grafo É conexo!")
+    if direct:
+        print("\nO grafo é fortemente conexo!\n")
+    else:
+        print("\nO grafo É conexo!\n")
 else:
-    print("O grafo NÃO é conexo!")
+    print("\nO grafo NÃO é conexo!\n")
 
 #a,b,c,d,e,f,g
 #a:b,d;b:c;c:g;d:e,f;e:a,b,g,c;f:c;g:b,f
@@ -167,7 +162,7 @@ for v in vertices:  # Para cada vértice
     intersection_sort = sorted(intersection(ftd_graph[v], fti_graph[v]))     # Conjunto de vertices ordenados para realizar a comparação
     if(intersection_sort not in intersection_listed):   # Verifica se interseções já foram listados, para não repitir os subgrafos
         intersection_listed.append(intersection_sort)
-        print("Subgrafo fortemente conexo do vértice ", v, ": ", intersection_sort) # Interseção entre os dois fechos
+        print("Subgrafo fortemente conexo máximo do vértice ", v, ": ", intersection_sort) # Interseção entre os dois fechos
 
 ###############  BUSCA  ###############
 search = input("Deseja realizar uma busca? (S-> Sim / N -> Não): ")
