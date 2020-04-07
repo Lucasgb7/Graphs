@@ -157,10 +157,18 @@ if(all(elem in intersec_root  for elem in vertices)): # Verifica se a interseç�
 else:
     print("O grafo NÃO é conexo!")
 
+#a,b,c,d,e,f,g
+#a:b,d;b:c;c:g;d:e,f;e:a,b,g,c;f:c;g:b,f
+
+inter = []
 for v in vertices:  # Para cada vértice
     ftd_graph[v] = ftd(graph, v)    # Fecho Transitivo Direto
     fti_graph[v] = fti(graph, v)    # Fecho Transitivo Indireto
-    print("Subgrafo fortemente conexo do vértice ", v, ": ", intersection(ftd_graph[v], fti_graph[v])) # Interseção entre os dois fechos
+
+    inter_sort = sorted(intersection(ftd_graph[v], fti_graph[v]))     # Conjunto de vertices ordenados para realizar a comparação
+    if( inter_sort not in inter):
+        inter.append(inter_sort)
+        print("Subgrafo fortemente conexo do vértice ", v, ": ", inter_sort) # Interseção entre os dois fechos
 
 ###############  BUSCA  ###############
 search = input("Deseja realizar uma busca? (S-> Sim / N -> Não): ")
