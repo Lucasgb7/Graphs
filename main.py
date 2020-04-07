@@ -160,15 +160,14 @@ else:
 #a,b,c,d,e,f,g
 #a:b,d;b:c;c:g;d:e,f;e:a,b,g,c;f:c;g:b,f
 
-inter = []
+intersection_listed = []
 for v in vertices:  # Para cada vértice
     ftd_graph[v] = ftd(graph, v)    # Fecho Transitivo Direto
     fti_graph[v] = fti(graph, v)    # Fecho Transitivo Indireto
-
-    inter_sort = sorted(intersection(ftd_graph[v], fti_graph[v]))     # Conjunto de vertices ordenados para realizar a comparação
-    if( inter_sort not in inter):
-        inter.append(inter_sort)
-        print("Subgrafo fortemente conexo do vértice ", v, ": ", inter_sort) # Interseção entre os dois fechos
+    intersection_sort = sorted(intersection(ftd_graph[v], fti_graph[v]))     # Conjunto de vertices ordenados para realizar a comparação
+    if(intersection_sort not in intersection_listed):   # Verifica se interseções já foram listados, para não repitir os subgrafos
+        intersection_listed.append(intersection_sort)
+        print("Subgrafo fortemente conexo do vértice ", v, ": ", intersection_sort) # Interseção entre os dois fechos
 
 ###############  BUSCA  ###############
 search = input("Deseja realizar uma busca? (S-> Sim / N -> Não): ")
@@ -188,5 +187,5 @@ else:
 
 G.add_nodes_from(vertices) # Definindo os vértices na biblioteca gráfica
 G.add_edges_from(edge) # Adicionando as arestas/arcos no gráfico
-nx.draw(G, with_labels="true")
-plt.show() # display
+nx.draw(G, with_labels="true") # Desenha o grafo com o nome dos vértices
+plt.show() # Dislpay
