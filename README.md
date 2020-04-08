@@ -1,5 +1,10 @@
 # Graphs
 ## Graphs algorithm in Python language
+
+### YouTube Presentation
+https://youtu.be/jtHnRqzEXXY
+
+### Objecite
 The repository objective it ts develops some Graphs logics like:
 
 - Read number of vertices
