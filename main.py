@@ -16,9 +16,9 @@ def dfs(graph, vertice, visited): # Depth First Search (DFS) - Busca por Profund
 
     dfs_iterativa(graph, vertice) # Retorna a função até que todos tenham sido visitados
 
-def bfs(graph, vertice_root, visited): # Breadth First Search (BFS) - Busca por Largura
+def bfs(graph, vertice, visited): # Breadth First Search (BFS) - Busca por Largura
     queue = [] # Cria uma fila
-    queue.append(vertice_root) # Add a raíz na fila
+    queue.append(vertice) # Add a raíz na fila
     while queue: # Enquanto houverem itens na fila
         vertice = queue.pop(0) # Remove o primeiro elemento da fila
         if vertice not in visited: # Verifica se o vértice foi visitado
