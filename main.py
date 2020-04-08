@@ -1,24 +1,12 @@
-"""""
-Fazer um programa que permita criar um grafo, com numero de vertices e arestas/arcos informados pelo usuário.
-Apartir do grafo informado, verificar se o grafo é conexo ou não. E caso não seja conexo, identificar os sub-grafos 
-fortemente conexos do grafo. Também deve ser possível verificar a sequencia dos vertices percorridos pelas buscas em Largura e Profundidade.
-- A interface do programa fica a critério da equipe, mas deve priorizar a usabilidade (facilidade de informar os dados e visualizar os resultados).
-Alunos:
-    Lucas José da Cunha
-    Luiz Alberto Zimmermann Zabel Martins Pinto
-    
-Disciplina: Grafos
-Professor: Rudimar Luis Scaranto Dazzi
-"""""
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 from graphs import Graphs
 
 def dfs(graph, vertice, visited): # Depth First Search (DFS) - Busca por Profundidade
-    def dfs_iterativa(graph, vertice_root):
-        visited.append(vertice_root)
-        missing_visit = [vertice_root]
+    def dfs_iterativa(graph, vertice):
+        visited.append(vertice)
+        missing_visit = [vertice]
         while missing_visit: # Enquanto todos não foram visitados
             vertice = missing_visit.pop()
             for neighbour in graph[vertice]: # Para cada vizinho do vértice em questão
@@ -26,7 +14,7 @@ def dfs(graph, vertice, visited): # Depth First Search (DFS) - Busca por Profund
                     visited.append(neighbour)
                     missing_visit.append(neighbour)
 
-    dfs_iterativa(graph, vertice) # Recursivamente retorna a função até que todos tenham sido visitados
+    dfs_iterativa(graph, vertice) # Retorna a função até que todos tenham sido visitados
 
 def bfs(graph, vertice_root, visited): # Breadth First Search (BFS) - Busca por Largura
     queue = [] # Cria uma fila
@@ -88,6 +76,13 @@ def intersection(lst1, lst2): # Função para extrair a interseção de duas lis
     #a,b,c,d,e
     #a:b,e;b:d;c:a;d:c,e;e:b
 
+    ## Exercício - Prova
+    # a,b,c,d,e,f,g
+    # a:b,d;b:c;c:g;d:e,f;e:a,b,c,g;f:c;g:b,f
+
+    # Slides de busca
+    # a,b,c,d,e,f,g,h,i
+    # a:e,f;b:g;c:h;d:d;e:i;f:e,i;g:a;i:a
 #INICIO DO PROGRAMA
 directed = input("O grafo é direcional? (S-> Sim / N -> Não): ") # Definindo se o grafo é direcional
 if directed is "S":

@@ -4,16 +4,19 @@
 ### YouTube Presentation
 https://youtu.be/jtHnRqzEXXY
 
-### Objecite
-The repository objective it ts develops some Graphs logics like:
+### Objective:
+The repository objective it ts develops some Graphs logic like:
 
-- Read number of vertices
-- Read edges of these vertices
-- Check graphs and subgraphs connectivity
+- User give number of vertices and yours connections (edge/arch).
+- Check graphs and sub-graphs connectivity
 - Depth First Search (DFS) and Breadth First Search (BFS)
 
 ### Requisits:
-    Execute Graphs\dist\main\Graphs.exe
+1. Download GIT repository
+2. Execute: 
+    ```
+    Graphs\dist\main\Graphs.exe
+    ```
 
 ### Developed by:
 - Lucas José da Cunha
@@ -22,5 +25,6 @@ The repository objective it ts develops some Graphs logics like:
  ### Subjects:
  - Discipline: Grafos
  - Professor: Rudimar Luis Scaranto Dazzi
+ - Curse: Engenharia de Computação
  - University:  Universidade do Vale do Itajaí - UNIVALI
 
